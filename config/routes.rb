@@ -13,5 +13,6 @@ Rails.application.routes.draw do
       as: 'concept_edit'
 
   post "/concepts" => "concepts#create"
-  patch "/concepts.:id" => "concepts#update"
+  patch "/concepts.:id_concept" => "concepts#update"
+  delete "/concepts.:id_concept" => "concepts#destroy"
 end

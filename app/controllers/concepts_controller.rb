@@ -34,7 +34,7 @@ class ConceptsController < ApplicationController
   def update
     respond_to do |format|
       if @concept.update(concept_params)
-        format.html { redirect_to subject_path, notice: 'El concepto fue correctamente actualizado.' }
+        format.html { redirect_to subjects_path, notice: 'El concepto fue correctamente actualizado.' }
         format.json { render :show, status: :ok, location: @concept }
       else
         format.html { render :edit }
@@ -44,13 +44,17 @@ class ConceptsController < ApplicationController
   end
 
   def destroy
-
+    @concept.destroy
+    respond_to do |format|
+      format.html { redirect_to subjects_path, notice: 'El concepto fue eliminado exitosamente' }
+      format.json { head :no_content }
+      end
   end
 
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_concept
-    @concept = Concept.find(params[:id])
+    @concept = Concept.find(params[:id_concept])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
