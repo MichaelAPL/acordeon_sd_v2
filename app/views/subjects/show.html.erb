@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+<h1>Detalles</h1>
+<h2>Tema: <%= @subject.name%></h2>
+<p>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Concepto</th>
+      <th>Definición</th>
+      <th colspan="2"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <%@concepts.each do |concept|
+      if concept.subject.id == @subject.id%>
+            <tr>
+              <td><%= concept.name %></td>
+              <td><%= concept.definition %></td>
+              <td><%= link_to 'Editar', concept_edit_path(@subject.id, concept), class: 'btn btn-info btn-xs' %></td>
+            </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</p>
+
+<div class="row">
+  <div class="col-xs-12 col-sm-6 col-md-8">
+    <%= link_to 'Editar nombre del tema', edit_subject_path(@subject), class: 'btn btn-info' %>
+    <%= link_to 'Agregar Concepto', subject_concept_new_path(@subject.id), class: 'btn btn-primary' %>
+  </div>
+  <div class="col-xs-6 col-md-4">
+    <%= link_to 'Regresar', subjects_path, class: 'btn btn-info'%>
+  </div>
+</div>

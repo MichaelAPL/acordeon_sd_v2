@@ -8,7 +8,15 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-    <%= yield %>
-  </body>
+  <div id="main-container" class="container">
+    <div class="row">
+      <div class="col-xs-3">
+        <h3>Acordeon Digital</h3>
+      </div>
+      <div>
+        <%= yield %>
+      </div>
+    </div>
+  </div>
+
 </html>
