@@ -12,20 +12,19 @@
 
 ActiveRecord::Schema.define(version: 20170516221932) do
 
-  create_table "concepts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "concepts", force: :cascade do |t|
     t.string   "name"
-    t.text     "definition", limit: 65535
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.text     "definition"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer  "subject_id"
-    t.index ["subject_id"], name: "index_concepts_on_subject_id", using: :btree
+    t.index ["subject_id"], name: "index_concepts_on_subject_id"
   end
 
-  create_table "subjects", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "subjects", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "concepts", "subjects"
 end
