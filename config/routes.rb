@@ -6,7 +6,10 @@ Rails.application.routes.draw do
   #root to: 'subjects#index'
   root 'static_pages#home'
 
+  get '/signup', to: 'users#new'
+
   resources :subjects
+  resources :users
 
   get '/concepts', to: 'concepts#index',
       as: 'concept'

@@ -6,9 +6,17 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= render 'layouts/shim' %>
   </head>
 
-  <div id="main-container" class="container">
+<body>
+  <%= render 'layouts/header' %>
+    <div class="container">
+      <%= yield %>
+      <%= render 'layouts/footer' %>
+    </div>
+</body>
+  <!--<div id="main-container" class="container">
     <div class="row">
       <div class="col-xs-3">
         <h3>Acordeon Digital</h3>
@@ -17,6 +25,5 @@
         <%= yield %>
       </div>
     </div>
-  </div>
-
+  </div>-->
 </html>
