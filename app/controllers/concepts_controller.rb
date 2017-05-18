@@ -18,6 +18,8 @@ class ConceptsController < ApplicationController
   end
 
   def create
+    current_user_id = User.find_by_id(session[:current_user_id])
+    concept_params[:created_by_user_id] = current_user_id
     @concept = Concept.new(concept_params)
 
     respond_to do |format|
