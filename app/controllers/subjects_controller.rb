@@ -20,6 +20,12 @@ class SubjectsController < ApplicationController
 
   # GET /subjects/1/edit
   def edit
+    subject = Subject.find(params[:id])
+    if subject.user_editing_id.nil?
+      
+    else
+
+    end
   end
 
   # POST /subjects
