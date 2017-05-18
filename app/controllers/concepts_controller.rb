@@ -14,13 +14,20 @@ class ConceptsController < ApplicationController
   end
 
   def edit
+    if !@concept.user_editing_id.nil?
+      respond_to do |format|
+        format.html {redirect_to subjects_url, notice: 'Concepto en edición, no puedes editarlo'}
+        format.json { head :no_content }
+      end
+    end
     @subject = Subject.find(params[:id])
   end
 
   def create
-    current_user_id = User.find_by_id(session[:current_user_id])
-    concept_params[:created_by_user_id] = current_user_id
+    current_user = User.find_by_id(session[:user_id])
+
     @concept = Concept.new(concept_params)
+    @concept = current_user.concepts.create(concept_params)
 
     respond_to do |format|
       if @concept.save
@@ -46,11 +53,19 @@ class ConceptsController < ApplicationController
   end
 
   def destroy
-    @concept.destroy
-    respond_to do |format|
-      format.html { redirect_to subjects_path, notice: 'El concepto fue eliminado exitosamente' }
-      format.json { head :no_content }
+    current_user = User.find_by_id(session[:user_id])
+    if @concept.user_id == current_user.id
+      @concept.destroy
+      respond_to do |format|
+        format.html { redirect_to subjects_path, notice: 'El concepto fue eliminado exitosamente' }
+        format.json { head :no_content }
       end
+    else
+      respond_to do |format|
+        format.html {redirect_to subjects_url, notice: 'No puedes eliminar este concepto debido a que no eres el autor'}
+        format.json { head :no_content }
+      end
+    end
   end
 
   private
