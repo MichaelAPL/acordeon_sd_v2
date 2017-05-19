@@ -36,6 +36,10 @@ class SubjectsController < ApplicationController
 
     respond_to do |format|
       if @subject.save
+        record = Record.new
+        record.action = Record::ACTION_CREATE
+        record.input = Record::SUBJECT
+        record.user_name = current_user.name
         format.html { redirect_to @subject, notice: 'Subject was successfully created.' }
         format.json { render :show, status: :created, location: @subject }
       else
@@ -50,6 +54,10 @@ class SubjectsController < ApplicationController
   def update
     respond_to do |format|
       if @subject.update(subject_params)
+        record = Record.new
+        record.action = Record::ACTION_UPDATE
+        record.input = Record::SUBJECT
+        record.user_name = current_user.name
         format.html { redirect_to @subject, notice: 'Subject was successfully updated.' }
         format.json { render :show, status: :ok, location: @subject }
       else
@@ -69,6 +77,10 @@ class SubjectsController < ApplicationController
       end
     else
       @subject.destroy
+      record = Record.new
+      record.action = Record::ACTION_DELETE
+      record.input = Record::SUBJECT
+      record.user_name = current_user.name
       respond_to do |format|
         format.html { redirect_to subjects_url, notice: 'Subject was successfully destroyed.' }
         format.json { head :no_content }
