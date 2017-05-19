@@ -3,9 +3,11 @@
 one:
   action: MyString
   input: MyString
+  name_input: MyString
   user_name: MyString
 
 two:
   action: MyString
   input: MyString
+  name_input: MyString
   user_name: MyString

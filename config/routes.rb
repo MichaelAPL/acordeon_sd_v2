@@ -18,6 +18,9 @@ Rails.application.routes.draw do
   get '/subject/:id/concept/:id_concept/edit', to: 'concepts#edit',
       as: 'concept_edit'
 
+  get '/records', to: 'records#index',
+      as: 'record'
+
   post "/concepts" => "concepts#create"
   patch "/concepts.:id_concept" => "concepts#update"
   delete "/concepts.:id_concept" => "concepts#destroy"

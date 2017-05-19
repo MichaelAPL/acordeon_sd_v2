@@ -38,7 +38,9 @@ class ConceptsController < ApplicationController
         record = Record.new
         record.action = Record::ACTION_CREATE
         record.input = Record::CONCEPT
+        record.name_input = @concept.name
         record.user_name = current_user.name
+        record.save
         format.html { redirect_to '/subjects', notice: 'El concepto fue correctamente agregado.' }
         format.json { render :show, status: :created, location: @concept }
       else
@@ -56,7 +58,9 @@ class ConceptsController < ApplicationController
         record = Record.new
         record.action = Record::ACTION_UPDATE
         record.input = Record::CONCEPT
+        record.name_input = @concept.name
         record.user_name = current_user.name
+        record.save
         format.html { redirect_to subjects_path, notice: 'El concepto fue correctamente actualizado.' }
         format.json { render :show, status: :ok, location: @concept }
       else
@@ -73,7 +77,9 @@ class ConceptsController < ApplicationController
       record = Record.new
       record.action = Record::ACTION_DELETE
       record.input = Record::CONCEPT
+      record.name_input = @concept.name
       record.user_name = current_user.name
+      record.save
       respond_to do |format|
         format.html { redirect_to subjects_path, notice: 'El concepto fue eliminado exitosamente' }
         format.json { head :no_content }

@@ -3,6 +3,7 @@ class CreateRecords < ActiveRecord::Migration[5.0]
     create_table :records do |t|
       t.string :action
       t.string :input
+      t.string :name_input
       t.string :user_name
 
       t.timestamps

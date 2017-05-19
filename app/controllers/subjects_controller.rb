@@ -10,7 +10,7 @@ class SubjectsController < ApplicationController
   # GET /subjects/1
   # GET /subjects/1.json
   def show
-    current_user = User.find_by_id(session[:user_id])
+    @current_user = User.find_by_id(session[:user_id])
     @concept = Concept.find_by_user_editing_id(current_user.id)
     if !@concept.nil? && (current_user.id == @concept.user_editing_id)
       @concept.user_editing_id = nil
@@ -32,6 +32,7 @@ class SubjectsController < ApplicationController
   # POST /subjects
   # POST /subjects.json
   def create
+    current_user = User.find_by_id(session[:user_id])
     @subject = Subject.new(subject_params)
 
     respond_to do |format|
@@ -39,7 +40,9 @@ class SubjectsController < ApplicationController
         record = Record.new
         record.action = Record::ACTION_CREATE
         record.input = Record::SUBJECT
+        record.name_input = @subject.name
         record.user_name = current_user.name
+        record.save
         format.html { redirect_to @subject, notice: 'Subject was successfully created.' }
         format.json { render :show, status: :created, location: @subject }
       else
@@ -52,12 +55,15 @@ class SubjectsController < ApplicationController
   # PATCH/PUT /subjects/1
   # PATCH/PUT /subjects/1.json
   def update
+    current_user = User.find_by_id(session[:user_id])
     respond_to do |format|
       if @subject.update(subject_params)
         record = Record.new
         record.action = Record::ACTION_UPDATE
         record.input = Record::SUBJECT
+        record.name_input = @subject.name
         record.user_name = current_user.name
+        record.save
         format.html { redirect_to @subject, notice: 'Subject was successfully updated.' }
         format.json { render :show, status: :ok, location: @subject }
       else
@@ -70,6 +76,7 @@ class SubjectsController < ApplicationController
   # DELETE /subjects/1
   # DELETE /subjects/1.json
   def destroy
+    current_user = User.find_by_id(session[:user_id])
     if isAssociatedWithConcept(@subject.id)
       respond_to do |format|
         format.html { redirect_to subjects_url, notice: 'No es posible eliminar un tema que tiene conceptos relacionados'}
@@ -80,7 +87,9 @@ class SubjectsController < ApplicationController
       record = Record.new
       record.action = Record::ACTION_DELETE
       record.input = Record::SUBJECT
+      record.name_input = @subject.name
       record.user_name = current_user.name
+      record.save
       respond_to do |format|
         format.html { redirect_to subjects_url, notice: 'Subject was successfully destroyed.' }
         format.json { head :no_content }
