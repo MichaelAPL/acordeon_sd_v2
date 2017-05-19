@@ -19,11 +19,12 @@ class ConceptsController < ApplicationController
         format.html {redirect_to subjects_url, notice: 'Concepto en edición, no puedes editarlo'}
         format.json { head :no_content }
       end
+    else
+      current_user = User.find_by_id(session[:user_id])
+      @concept.user_editing_id = current_user.id
+      @concept.save
+      @subject = Subject.find(params[:id])
     end
-    current_user = User.find_by_id(session[:user_id])
-    @concept.user_editing_id = current_user.id
-    @concept.save
-    @subject = Subject.find(params[:id])
   end
 
   def create

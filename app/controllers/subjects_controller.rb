@@ -12,7 +12,7 @@ class SubjectsController < ApplicationController
   def show
     current_user = User.find_by_id(session[:user_id])
     @concept = Concept.find_by_user_editing_id(current_user.id)
-    if !@concept.nil?
+    if !@concept.nil? && (current_user.id == @concept.user_editing_id)
       @concept.user_editing_id = nil
       @concept.save
     end
