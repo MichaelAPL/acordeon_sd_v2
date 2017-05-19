@@ -11,10 +11,11 @@ class SubjectsController < ApplicationController
   # GET /subjects/1.json
   def show
     current_user = User.find_by_id(session[:user_id])
-    @concept = Concept.find_by(user_editing_id: current_user.id)
-    puts @concept.user_editing_id
-    @concept.user_editing_id = nil
-    @concept.save
+    @concept = Concept.find_by_user_editing_id(current_user.id)
+    if !@concept.nil?
+      @concept.user_editing_id = nil
+      @concept.save
+    end
     @concepts = Concept.all
   end
 
