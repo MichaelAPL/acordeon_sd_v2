@@ -20,6 +20,9 @@ class ConceptsController < ApplicationController
         format.json { head :no_content }
       end
     end
+    current_user = User.find_by_id(session[:user_id])
+    @concept.user_editing_id = current_user.id
+    @concept.save
     @subject = Subject.find(params[:id])
   end
 
@@ -41,6 +44,8 @@ class ConceptsController < ApplicationController
   end
 
   def update
+    @concept.user_editing_id = nil
+    @concept.save
     respond_to do |format|
       if @concept.update(concept_params)
         format.html { redirect_to subjects_path, notice: 'El concepto fue correctamente actualizado.' }

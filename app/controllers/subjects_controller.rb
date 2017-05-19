@@ -10,6 +10,11 @@ class SubjectsController < ApplicationController
   # GET /subjects/1
   # GET /subjects/1.json
   def show
+    current_user = User.find_by_id(session[:user_id])
+    @concept = Concept.find_by(user_editing_id: current_user.id)
+    puts @concept.user_editing_id
+    @concept.user_editing_id = nil
+    @concept.save
     @concepts = Concept.all
   end
 
@@ -20,7 +25,7 @@ class SubjectsController < ApplicationController
 
   # GET /subjects/1/edit
   def edit
-    subject = Subject.find(params[:id])    
+    @subject = Subject.find(params[:id])
   end
 
   # POST /subjects
